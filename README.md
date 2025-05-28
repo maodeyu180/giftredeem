@@ -72,9 +72,9 @@ JWT_SECRET=your-secure-random-string
 # OAuth 配置
 OAUTH_LINUXDO_CLIENT_ID=your-client-id
 OAUTH_LINUXDO_CLIENT_SECRET=your-client-secret
-OAUTH_LINUXDO_AUTH_URL=https://linuxdo.com/oauth/authorize
-OAUTH_LINUXDO_TOKEN_URL=https://linuxdo.com/oauth/token
-OAUTH_LINUXDO_USER_INFO_URL=https://linuxdo.com/api/user
+OAUTH_LINUXDO_AUTH_URL=https://connect.linux.do/oauth2/authorize
+OAUTH_LINUXDO_TOKEN_URL=https://connect.linux.do/oauth/token
+OAUTH_LINUXDO_USER_INFO_URL=https://connect.linux.do/api/user
 ```
 
 ### 数据库设置
@@ -84,6 +84,34 @@ OAUTH_LINUXDO_USER_INFO_URL=https://linuxdo.com/api/user
    CREATE DATABASE giftredeem CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
    ```
 
+2. 程序运行后 插入l sso 平台
+```
+INSERT INTO o_auth_providers (
+    name,
+    display_name,
+    client_id,
+    client_secret,
+    auth_url,
+    token_url,
+    user_info_url,
+    scope,
+    enabled,
+    sort_order,
+    created_at
+) VALUES (
+    'linuxdo',
+    'LinuxDo',
+    'id',
+    'secret',
+    'https://connect.linux.do/oauth2/authorize',
+    'https://connect.linux.do/oauth2/token',
+    'https://connect.linux.do/api/user',
+    'user',
+    1,
+    10,
+    NOW()
+);
+```
 
 ```bash
 go run ./cmd/server
